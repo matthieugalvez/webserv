@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:24:52 by mgalvez           #+#    #+#             */
-/*   Updated: 2025/06/02 12:11:31 by mgalvez          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:35:43 by lbenatar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ public:
     const std::string							getUriPath() const;
     const std::vector<char>						getbodyVec() const;
     const std::string							getMethod() const;
-    const std::string							getUri() const;
+    std::string							        getUri() const;
     const std::string							getVersion() const;
     const std::string							getBody() const;
 	const t_serveur								*getServeur() const;

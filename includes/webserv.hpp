@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:33:54 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 11:25:58 by mgalvez          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:31:45 by lbenatar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,3 +107,4 @@ void								check_client_timeout(t_globalData &dataStruct);
 void								sighandler_child(void);
 void								freeall(t_globalData &dataStruct);
 std::string							urlencoded_parsing_a_la_loupe(const std::string& str);
+std::string error_404_mgnt(std::string path);

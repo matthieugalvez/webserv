@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:18:20 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 11:26:11 by mgalvez          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:46:45 by lbenatar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void give_locations_default_params(std::vector<t_serveur>& data_config)
             if (data_config[i].locations[j].index == "" && !data_config[i].locations[j].autoindex)
                 data_config[i].locations[j].index = data_config[i].index;
         }
+		if (data_config[i].adressIP == "")
+			data_config[i].adressIP = "127.0.0.1";
     }
 }
 

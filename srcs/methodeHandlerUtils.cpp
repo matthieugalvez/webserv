@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:13:45 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 16:35:00 by mgalvez          ###   ########.fr       */
+/*   Updated: 2025/06/12 12:03:30 by mgalvez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	makepathfromURI(const t_serveur &server, HTTPRequest &requestHTTP, const t_
 	std::string	path;
 
     if (current_location.root.size())
-        path = current_location.root + requestHTTP.getUri();
+        path = current_location.root + requestHTTP.getUri().substr(current_location.path.size());
     else {
         path = server.root + requestHTTP.getUri();
     }
