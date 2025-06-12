@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: prambaud <prambaud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:31:19 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 15:49:56 by prambaud         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:28:18 by mgalvez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ void launch_servers(std::vector<t_serveur>& servers)
 	for (size_t i = 0; i < servers.size(); ++i)
     {
 		// creation du socket serveur
-			servers[i].socket = server_socket_creation(&servers[i]); // bind + socket_serveur
-			if (servers[i].socket == -1) {
-				std::cerr << "[Server] Creation error: " << strerror(errno) << std::endl;
-				return ;
-			}
-	//		std::cout << "socket server[" << i << "] :" << servers[i].socket << std::endl;
-
-			// Listen du PORT via la socket
-			std::cout << "[Server] Listening on port " << servers[i].port << std::endl << std::endl;
-			status = listen(servers[i].socket, BACKLOG);
-			if(status != 0) {
-				std::cerr << "[Server] Listen error: " << strerror(errno) << std::endl;
-				return ;
-			}
+		servers[i].socket = server_socket_creation(&servers[i]); // bind + socket_serveur
+		if (servers[i].socket == -1) {
+			std::cerr << "[Server] Creation error: " << strerror(errno) << std::endl;
+			return ;
 		}
+//		std::cout << "socket server[" << i << "] :" << servers[i].socket << std::endl;
+
+		// Listen du PORT via la socket
+		std::cout << "[Server] Listening on port " << servers[i].port << std::endl << std::endl;
+		status = listen(servers[i].socket, BACKLOG);
+		if(status != 0) {
+			std::cerr << "[Server] Listen error: " << strerror(errno) << std::endl;
+			return ;
+		}
+	}
 }
 
 int main(int ac, char **av)

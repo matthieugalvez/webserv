@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: prambaud <prambaud@student.42.fr>          +#+  +:+       +#+         #
+#    By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:46:31 by prambaud          #+#    #+#              #
-#    Updated: 2025/06/03 14:54:57 by prambaud         ###   ########.fr        #
+#    Updated: 2025/06/03 09:07:09 by lbenatar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ SRCS_FILES	=	main.cpp \
 				requestFullyReceivedCheck.cpp \
 				methodeHandler.cpp \
 				postMultipart.cpp \
-				error_mgnt.cpp \
 				serverSetUpUtils.cpp
 
 OBJS_FILES	=	$(SRCS_FILES:.cpp=.o)
