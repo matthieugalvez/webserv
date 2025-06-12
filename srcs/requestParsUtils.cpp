@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:57:21 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 15:46:55 by lbenatar         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:26:44 by mgalvez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ bool checkValideRequestHost(HTTPRequest requestHTTP, t_client &client)
             return (true);
         if(hostName == "localhost")
             return (true);
-        if(hostName == client.serversPort[i].adressIP)
-            return (true);
         i++;
     }
     return (false);
@@ -151,13 +149,13 @@ std::string getBodyTransferEncoding(char buffer[])
     return body;
 }
 
-void printRequestPreParsing(char buffer[])
-{
-   std::cout << "\n---- print_REQUEST_PreParsing ----\n" << std::endl;
-   std::istringstream messageHttp(buffer);
-   std::string line;
-   while (std::getline(messageHttp, line)) {
-       std::cout << line << std::endl;
-   }
-   std::cout << "---------------END printRequestPreParsing-----------------" << std::endl;
-}
+//void printRequestPreParsing(char buffer[])
+//{
+//    std::cout << "\n---- print_REQUEST_PreParsing ----\n" << std::endl;
+//    std::istringstream messageHttp(buffer);
+//    std::string line;
+//    while (std::getline(messageHttp, line)) {
+//        std::cout << line << std::endl;
+//    }
+//    std::cout << "---------------END printRequestPreParsing-----------------" << std::endl;
+//}

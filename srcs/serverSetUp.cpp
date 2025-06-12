@@ -6,7 +6,7 @@
 /*   By: prambaud <prambaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:26:07 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 16:26:22 by mgalvez          ###   ########.fr       */
+/*   Updated: 2025/06/03 15:49:42 by prambaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int server_socket_creation(t_serveur *data_config) {
     status = bind(socket_fd, (struct sockaddr *)&sa, sizeof sa);
     if (status != 0) {
 		std::cerr << "[Server] Bind error: " << strerror(errno) << std::endl;
-		close (socket_fd);
         return (-1);
     }
 //	std::cout << "[server] bound socket to localhost port " << data_config->port << std::endl;
@@ -102,7 +101,7 @@ void waiting_connection(std::vector<t_serveur>& servers)
     // Pour surveiller les sockets clients :
     t_globalData dataStruct;
     globalDataStructInit(dataStruct, servers);
-    bool	inProcess(0);
+    bool inProcess(0);
 	short	loop_idx = 0;
     //creation des clients/
 	try

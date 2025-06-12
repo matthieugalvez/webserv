@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   postHandler.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: prambaud <prambaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:15:56 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 16:34:26 by lbenatar         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:22:40 by prambaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ std::map<std::string, std::string> parse_Json(const std::string& body)
         size_t colon = body.find(':', keyEnd);
         size_t valStart = body.find_first_not_of(" \t\n\"", colon + 1);
         size_t valEnd = body.find_first_of(",}", valStart);
-        std::string value = body.substr(valStart, valEnd - valStart - 1);
+        std::string value = body.substr(valStart, valEnd - valStart);
 
         result[key] = value;
         i = valEnd;
@@ -111,37 +111,6 @@ int PostComment(const t_serveur &server, std::map<std::string, std::string>  bod
     }
     file << bodyMap["comment"];
     file << "\n";
-    if (file.fail()) {
-		std::string	err_msg("Error 500 : Cannot write in file");
-        throw HttpError(err_msg);
-    }
-    file.close();
-    return (0);
-}
-
-int PostCommentJson(const t_serveur &server, std::map<std::string, std::string>  bodyMap, const t_location &current_location)
-{
-    std::string path;
-    if (current_location.root == "")
-        path = "." + server.root + current_location.path;
-    else
-        path = "." + current_location.root + current_location.path;
-    path += "/Uploads/CommentsJson.txt";
-    std::ofstream file;
-    file.open(path.c_str(), std::ios::out | std::ios::app);
-//    std::cout << path << std::endl;
-    if (!file.is_open()) {
-		std::string	err_msg("Error 403 : No permission to open the file");
-        throw HttpError(err_msg);
-    }
-    std::map<std::string, std::string>::iterator it;
-    for (it = bodyMap.begin(); it != bodyMap.end(); it++)
-    {
-        file << it->first;
-        file << " : ";
-        file << it->second;
-        file << "\n";
-    }
     if (file.fail()) {
 		std::string	err_msg("Error 500 : Cannot write in file");
         throw HttpError(err_msg);
@@ -187,7 +156,66 @@ int PostUpload(const t_serveur &server, t_formdata Upload_request, const t_locat
     close(fd);
     return (0);
 }
-
+/*
+std::vector<t_formdata> divide_multipart2(std::string boundary, std::string body)
+{
+    boundary = "--" + boundary.substr(boundary.find_last_of("=") + 1, boundary.size());
+    const char *buffer = body.c_str();
+    std::istringstream messageHttp(buffer);
+    std::string line;
+    std::vector<t_formdata> datas;
+    while(std::getline(messageHttp, line))
+    {
+        if (line.find(boundary) == std::string::npos)
+        {
+            std::string word;
+            std::istringstream flux(line);
+            t_formdata data;
+            init_formdata(data);
+            flux >> word;
+            flux >> word;
+            flux >> word;
+            if (!flux.fail())
+            {
+                if (word.find(";") != std::string::npos)
+                    data.name = word.substr(6, word.size() - 8);
+                else
+                    data.name = word.substr(6, word.size() - 7);
+            }
+            flux >> word;
+            if (!flux.fail())
+                data.username = word.substr(10, word.size() - 11);
+            std::getline(messageHttp, line);
+            if (line.find("Content-Type: ") != std::string::npos)
+            {
+                std::istringstream flux(line);
+                flux >> word;
+                flux >> word;
+                data.content_type = word;
+                std::getline(messageHttp, line);
+            }
+            int i(0);
+            while (line.rfind(boundary, 0) != 0 && i < 10)
+            {
+                std::getline(messageHttp, line);
+                if (line.rfind(boundary, 0) != 0)
+                    data.body += line + "\n";
+            }
+            std::cout << "                      -----                           " << std::endl;
+            std::cout << "data.name :" << data.name << std::endl;
+            std::cout << "                      -----                           " << std::endl;
+            std::cout << "data.username :" << data.username << std::endl;
+            std::cout << "                      -----                           " << std::endl;
+            std::cout << "data.content_type :" << data.content_type << std::endl;
+            std::cout << "                      -----                           " << std::endl;
+            std::cout << "data.body :" << data.body << std::endl;
+            datas.push_back(data);
+        }
+        if (line.rfind(boundary + "--", 0) == 0)
+            break;
+    }
+    return (datas);
+}*/
 
 // fonction qui permet de savoir si les X dernier caracteres lus sont boundarryyyyyyy LUCAS HAPPPTYYYYYYYY
 
@@ -220,11 +248,6 @@ HTTPResponse sendErrorResponsePost(const char *str)
         response.setStatus(404, "Resource not found");
         body = error_404_mgnt("./www/webservSite/error_404.html");
     }
-    if (word == "415")
-    {
-        response.setStatus(415, "Content-Type unknown");
-        body = formatErrorPage(word, "Error : Content-Type unknown");
-    }
     size_t value = body.length();
     std::ostringstream oss;
     oss << value;
@@ -250,29 +273,6 @@ std::string formatResponseBodyUpload(std::string fileName) {
     body += fileName;
     body += "</p>\n\t<p><a href=\"/\">Retour à l'accueil</a></p>\n</body>\n</html>";
     return(body);
-}
-
-void posteCommentTextPlain(const t_serveur &server, std::string body, const t_location &current_location)
-{
-    std::string path;
-    if (current_location.root == "")
-        path = "." + server.root + current_location.path;
-    else
-        path = "." + current_location.root + current_location.path;
-    path += "/Uploads/CommentsTextPlain.txt";
-    std::ofstream file;
-    file.open(path.c_str(), std::ios::out | std::ios::app);
-    if (!file.is_open()) {
-        std::string	err_msg("Error 403 : No permission to open the file");
-        throw HttpError(err_msg);
-    }
-    file << body;
-    file << "\n";
-    if (file.fail()) {
-        std::string	err_msg("Error 500 : Cannot write in file");
-        throw HttpError(err_msg);
-    }
-    file.close();
 }
 
 void handlePost(const t_serveur &server, t_client &client, const t_location &current_location)
@@ -341,61 +341,18 @@ void handlePost(const t_serveur &server, t_client &client, const t_location &cur
         oss << bodySize;
         client.response.setHeader("Content-Length", oss.str());
     }
-    else if (headers["Content-Type"] == "plain/text") {
-        try {
-            posteCommentTextPlain(server, client.request.getBody(), current_location);
-        }
-        catch (const HttpError& e) {
-            client.response = sendErrorResponsePost(e.what());
-            client.responseReady = true;
-            return ;
-        }
-        client.responseReady = true;
-        client.response.setBody(formatResponseBodyUpload(client.request.getBody()));
-        client.response.setStatus(201, "Created");
-        client.response.setHeader("Server", "Webserv/1.0");
-        client.response.setHeader("Date", getHTTPDate());
-        client.response.setHeader("Content-Type", "text/html; charset=UTF-8");
-        if (headers["Connection"] == "keep-alive" || (client.request.getVersion() == "HTTP/1.1" && headers["Connection"] != "close"))
-            client.response.setHeader("Connection", "keep-alive");
-        else if (headers["Connection"] == "close" || client.request.getVersion() == "HTTP/1.0")
-            client.response.setHeader("Connection", "close");
-        size_t bodySize = client.response.getBody().length();
-        std::ostringstream oss;
-        oss << bodySize;
-        client.response.setHeader("Content-Length", oss.str());
-    }
-    else if (headers["Content-Type"] == "application/json") {
-        std::map<std::string, std::string> bodyMap = parse_Json(client.request.getBody());
-    //    std::cout << "\n\n\n\n\nooooooooooooooooooooooooooooooooooooooo\n\n\n\n\n\n";
-        try {
-            PostCommentJson(server, bodyMap, current_location);
-        }
-        catch (const HttpError& e) {
-            client.response = sendErrorResponsePost(e.what());
-            client.responseReady = true;
-            return ;
-        }
-        client.response.setBody(formatResponseBodyUpload("un truc au format Json"));
-        client.response.setStatus(201, "Created");
-        client.response.setHeader("Server", "Webserv/1.0");
-        client.response.setHeader("Date", getHTTPDate());
-        client.response.setHeader("Content-Type", "text/html; charset=UTF-8");
-        if (headers["Connection"] == "keep-alive" || (client.request.getVersion() == "HTTP/1.1" && headers["Connection"] != "close"))
-            client.response.setHeader("Connection", "keep-alive");
-        else if (headers["Connection"] == "close" || client.request.getVersion() == "HTTP/1.0")
-            client.response.setHeader("Connection", "close");
-        size_t bodySize = formatResponseBodyUpload("un truc au format Json").length();
-        std::ostringstream oss;
-        oss << bodySize;
-        client.response.setHeader("Content-Length", oss.str());
-        client.responseReady = true;
-    }
-    else
-    {
-        client.response = sendErrorResponsePost("Error 415 : Content-Type Unknown");
-        client.responseReady = true;
-        return ;
-    }
+	// if (headers["Content-type"] == "application/json")
+	// {
+    //     response.setBodyparsed(parse_Json(body));
+	// }
+	// else if (headers["Content-type"] == "application/x-www-form-urlencoded")
+	// {
+    //     response.setBodyparsed(parse_urlencoded(body));
+	// }
+
+	// else
+    // {
+
+    // }
 	return ;
 }

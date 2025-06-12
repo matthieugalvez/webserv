@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   deleteHandler.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: prambaud <prambaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:38:13 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 16:36:59 by lbenatar         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:22:43 by prambaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,6 @@ std::string formatResponseBodyDelete(std::string fileName) {
     return(body);
 }
 
-std::string error_404_mgnt(std::string path) {
-    std::ifstream file(path.c_str());
-    if (!file.is_open()) {
-    std::cerr << "ERREUR: Fichier non trouvé: " << path << std::endl;
-    return "";}
-    std::string body;
-    std::string line;
-    while(std::getline(file, line))
-    {
-            body += line;
-            body += "\n";
-    }
-    file.close();
-    return(body);
-}
 
 HTTPResponse sendErrorResponseDelete(const char *str)
 {

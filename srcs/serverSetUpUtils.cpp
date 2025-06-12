@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   serverSetUpUtils.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: prambaud <prambaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:26:07 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 16:26:51 by mgalvez          ###   ########.fr       */
+/*   Updated: 2025/06/03 17:25:16 by prambaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int get_serveur_port_number(int j, std::vector<t_serveur>& servers)
 
 void serveurNonBlocking(int socket_fd)
 {
-    int	reuseaddr = 1;
-    int	flags = fcntl(socket_fd, F_GETFL, 0); // Retrieve the current flag of the socket
+    int					reuseaddr = 1;
+    int flags = fcntl(socket_fd, F_GETFL, 0); // Retrieve the current flag of the socket
 	if (flags == -1) {
 		std::cerr << "Error fcntl(F_GETFL)" << std::endl;
 	}

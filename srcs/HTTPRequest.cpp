@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:06:39 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 15:35:30 by lbenatar         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:11:38 by mgalvez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ const std::string	HTTPRequest::getBody() const {
     return body;
 }
 
-std::string	HTTPRequest::getUri() const {
+const std::string	HTTPRequest::getUri() const {
     return uri;
 }
 

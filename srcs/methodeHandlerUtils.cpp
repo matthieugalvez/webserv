@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:13:45 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/12 12:03:30 by mgalvez          ###   ########.fr       */
+/*   Updated: 2025/06/03 11:52:01 by mgalvez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	freeall(t_globalData &dataStruct)
 
 		while (vec_it != dataStruct.d_servers->end())
 		{
-			if (vec_it->socket != -1)
+			if (vec_it->socket != 1)
 				close(vec_it->socket);
 			++vec_it;
 		}
@@ -81,7 +81,7 @@ void	makepathfromURI(const t_serveur &server, HTTPRequest &requestHTTP, const t_
 	std::string	path;
 
     if (current_location.root.size())
-        path = current_location.root + requestHTTP.getUri().substr(current_location.path.size());
+        path = current_location.root + requestHTTP.getUri();
     else {
         path = server.root + requestHTTP.getUri();
     }
