@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:38:13 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 11:56:17 by lbenatar         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:36:59 by lbenatar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,22 @@ std::string formatResponseBodyDelete(std::string fileName) {
     return(body);
 }
 
+std::string error_404_mgnt(std::string path) {
+    std::ifstream file(path.c_str());
+    if (!file.is_open()) {
+    std::cerr << "ERREUR: Fichier non trouvé: " << path << std::endl;
+    return "";}
+    std::string body;
+    std::string line;
+    while(std::getline(file, line))
+    {
+            body += line;
+            body += "\n";
+    }
+    file.close();
+    return(body);
+}
+
 HTTPResponse sendErrorResponseDelete(const char *str)
 {
     HTTPResponse	response;
@@ -94,7 +110,7 @@ HTTPResponse sendErrorResponseDelete(const char *str)
     if (word == "404")
     {
         response.setStatus(404, "Resource not found");
-        body = formatErrorPage(word, "Error : Resource not found");
+        body = error_404_mgnt("./www/webservSite/error_404.html");
     }
     size_t value = body.length();
     std::ostringstream oss;

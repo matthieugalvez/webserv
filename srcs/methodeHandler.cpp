@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:46:54 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 12:11:14 by mgalvez          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:34:07 by lbenatar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ HTTPResponse sendErrorResponseGet(const char *str)
     if (word == "404")
     {
         response.setStatus(404, "Resource not found");
-        body = formatErrorPage(word, "Error : Resource not found");
+        body = error_404_mgnt("./www/webservSite/error_404.html");
     }
     if (word == "405")
     {
