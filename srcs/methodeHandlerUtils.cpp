@@ -6,7 +6,7 @@
 /*   By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:13:45 by prambaud          #+#    #+#             */
-/*   Updated: 2025/06/03 16:30:23 by lbenatar         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:18:44 by mgalvez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	freeall(t_globalData &dataStruct)
 
 		while (vec_it != dataStruct.d_servers->end())
 		{
-			if (vec_it->socket != 1)
+			if (vec_it->socket != -1)
 				close(vec_it->socket);
 			++vec_it;
 		}
