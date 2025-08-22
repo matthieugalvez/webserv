@@ -6,7 +6,7 @@
 /*   By: mgalvez <mgalvez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:26:12 by mgalvez           #+#    #+#             */
-/*   Updated: 2025/06/03 11:51:04 by mgalvez          ###   ########.fr       */
+/*   Updated: 2025/08/22 16:08:10 by mgalvez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	sig_handler(int signal)
 	extern int	g_sig_errno;
 
 	g_sig_errno = signal;
-	throw std::runtime_error("\r[Server] Closing signal recieved");
+	throw std::runtime_error("\r[Server] Closing signal received");
 }
 
 void	sighandler_init(void)
