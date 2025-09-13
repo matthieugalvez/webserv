@@ -56,7 +56,7 @@ server {
 
 `autoindex <on/off>` If on, server will generate a default index.html file listing this location's files.
 
-`upload_dir`
+`upload_dir <directoryPath>` Define a directory in with uploaded files will be stored.
 
 `cgi <filenameExtension> [binaryName]` Specify a filename extension to treat as CGI inside location. The binary used to execute the cgi script can be provided as option. Otherwise, the server will consider the file as an executable.
 
@@ -68,8 +68,8 @@ server {
 
 These options can be defined in server scope to serv as default for the locations of said server or be overwritten at location scope.
 
-`root`
+`root <path>` Define root to the relative path of the location.
 
-`index`
+`index <file>` Define a custom index file for location.
 
-`client_max_body_size`
+`client_max_body_size <size>` Define the maximum size of client request for location.
