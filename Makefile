@@ -6,58 +6,57 @@
 #    By: lbenatar <lbenatar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 14:46:31 by prambaud          #+#    #+#              #
-#    Updated: 2025/06/03 09:07:09 by lbenatar         ###   ########.fr        #
+#    Updated: 2025/09/13 19:40:29 by mgalvez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	webserv
-
-CXX			=	c++
-
-CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98 -g3
+NAME		= webserv
+MAKE		= make
+CXX			= c++
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -g3
 
 # directories
-SRCS_DIR		=	srcs/
-OBJS_DIR		=	.objs/
-INCS_DIR		=	includes/
+SRCS_DIR	= srcs/
+OBJS_DIR	=.objs/
+INCS_DIR	= includes/
 
 # controll codes
-RESET		=	\033[0m
-GREEN		=	\033[32m
-YELLOW		=	\033[33m
-BLUE		=	\033[34m
-RED			=	\033[31m
-UP			=	\033[A
-CUT			=	\033[K
+RESET		= \033[0m
+GREEN		= \033[32m
+YELLOW		= \033[33m
+BLUE		= \033[34m
+RED			= \033[31m
+UP			= \033[A
+CUT			= \033[K
 
 #source files
-SRCS_FILES	=	main.cpp \
-				sighandler.cpp \
-				confParsing.cpp \
-				serverSetUp.cpp \
-				requestParsing.cpp \
-				HTTPRequest.cpp \
-				responseParsing.cpp \
-				HTTPResponse.cpp \
-				callCGI.cpp \
-				CGIProcess.cpp \
-				autoIndexManagement.cpp \
-				serverManagement.cpp \
-				requestParsUtils.cpp \
-				methodeHandlerUtils.cpp \
-				deleteHandler.cpp \
-				postHandler.cpp \
-				requestFullyReceivedCheck.cpp \
-				methodeHandler.cpp \
-				postMultipart.cpp \
-				serverSetUpUtils.cpp
+SRCS_FILES	= main.cpp \
+			  sighandler.cpp \
+			  confParsing.cpp \
+			  serverSetUp.cpp \
+			  requestParsing.cpp \
+			  HTTPRequest.cpp \
+			  responseParsing.cpp \
+			  HTTPResponse.cpp \
+			  callCGI.cpp \
+			  CGIProcess.cpp \
+			  autoIndexManagement.cpp \
+			  serverManagement.cpp \
+			  requestParsUtils.cpp \
+			  methodeHandlerUtils.cpp \
+			  deleteHandler.cpp \
+			  postHandler.cpp \
+			  requestFullyReceivedCheck.cpp \
+			  methodeHandler.cpp \
+			  postMultipart.cpp \
+			  serverSetUpUtils.cpp
 
-OBJS_FILES	=	$(SRCS_FILES:.cpp=.o)
+OBJS_FILES	= $(SRCS_FILES:.cpp=.o)
 
 #paths
-SRCS			=	$(addprefix $(SRCS_DIR), $(SRCS_FILES))
-OBJS			=	$(addprefix $(OBJS_DIR), $(OBJS_FILES))
-DEPS			=	$(OBJS:.o=.d)
+SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
+OBJS		= $(addprefix $(OBJS_DIR), $(OBJS_FILES))
+DEPS		= $(OBJS:.o=.d)
 
 #all rule
 all: $(NAME)
@@ -99,7 +98,8 @@ fclean: clean
 	fi;
 
 #re rule
-re: fclean all
+re: fclean
+	$(MAKE) all
 
 #phony
 .PHONY: all clean fclean re
