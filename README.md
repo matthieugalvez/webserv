@@ -13,7 +13,7 @@ make
 
 ## Launch
 
-Execute the webserv binary with a configuration file (.conf) entered as parameter. If no parameter is provided, webserv will try to configure itself using the `/conf_files/ConfigBase.conf` file.
+Execute the webserv binary with a configuration file (.conf) entered as parameter. If no parameter is provided, webserv will try to configure itself using the `conf_files/ConfigBase.conf` file.
 ```
 webserv [confFile]
 ```
@@ -44,30 +44,32 @@ server {
 
 ### server options
 
-#### listen
+`listen <port>` The port the server will be listening.
 
-#### server_name
+`server_name <name>` The server name indication (SNI).
 
-#### host
+`host <IPAdress>` The IP adress the server will be accessible from.
 
-#### error_page
+`error_page <errorNum> <filePath>` The `html` file that will be load by the server on error `<errorNum>`.
 
 ### location options
 
-#### autoindex
+`autoindex <on/off>` If on, server will generate a default index.html file listing this location's files.
 
-#### upload_dir
+`upload_dir`
 
-#### cgi
+`cgi <filenameExtension> [binaryName]` Specify a filename extension to treat as CGI inside location. The binary used to execute the cgi script can be provided as option. Otherwise, the server will consider the file as an executable.
 
-#### allow_methods
+`allow_methods [method1 method2 ...]` List HTTP methods allowed in location. Supported methods are `DELETE`, `POST` and `GET`.
 
-#### return
+`return <HTTPStatusCode> <redirectionURL>` Location send a return response with code `<HTTPStatusCode>` redirecting client toward `<redirectionURL>`.
 
 ### options viable in both scopes
 
-#### root
+These options can be defined in server scope to serv as default for the locations of said server or be overwritten at location scope.
 
-#### index
+`root`
 
-#### client_max_body_size
+`index`
+
+`client_max_body_size`
