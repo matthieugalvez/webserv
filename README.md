@@ -1,5 +1,7 @@
 # webserv
 
+![title](/assets/title.pgn)
+
 Webserv is a web server using `select` as a non-blocking client manager and implementing CGIs.
 
 
